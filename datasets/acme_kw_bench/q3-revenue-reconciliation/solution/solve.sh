@@ -28,15 +28,14 @@ with open("/workspace/data/stripe_exports.csv") as f:
             discrepancies.append(inv_id)
 
 report = {
-    "net_recognized_usd_cents": int(round(recognized_total * 100)),
     "recognized_revenue_usd": round(recognized_total, 2),
-    "discrepancy_invoice_ids": list(reversed(discrepancies)),
+    "discrepancy_invoice_ids": discrepancies,
 }
 with open("/workspace/reconciliation_report.json", "w") as f:
     json.dump(report, f, indent=2)
 
 with open("/workspace/answer.md", "w") as f:
-    f.write("## Section 1: GAAP Variance Table\n\n")
+    f.write("# Q3 Recognized Revenue Reconciliation Summary\n\n")
     f.write(f"Total Q3 recognized revenue is **${recognized_total:,.2f}** (ERP booked $69,500.00).\n")
     f.write("- **INV-1002**: Annual contract booked at 100% ($24,000) instead of 25% ($6,000).\n")
     f.write("- **INV-1003**: EUR 10,000 booked at 1:1 instead of 1.10 USD FX rate ($11,000).\n")

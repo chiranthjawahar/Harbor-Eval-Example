@@ -8,5 +8,12 @@ You are a financial operations analyst at Acme Corp. Close of Q3 is tomorrow, an
 3. `docs/accounting_policy.md` — Acme's official Q3 revenue recognition rules (covering FX conversion rates, refunded charges, and annual contract proration).
 
 ## Deliverables
-1. **`/workspace/reconciliation_report.json`**: A JSON file summarizing the Q3 recognized revenue in USD and listing any invoices that have a discrepancy between Stripe and the ERP ledger.
-2. **`/workspace/answer.md`**: A concise executive summary explaining the total recognized Q3 revenue and the root cause of each discrepancy found.
+1. **`/workspace/reconciliation_report.json`**: A JSON file conforming to this normative schema:
+   ```json
+   {
+     "recognized_revenue_usd": <float>,
+     "discrepancy_invoice_ids": ["INV-XXXX", "..."]
+   }
+   ```
+   *(Note: `discrepancy_invoice_ids` may be in any order; `recognized_revenue_usd` is in USD dollars.)*
+2. **`/workspace/answer.md`**: A concise executive summary explaining the total recognized Q3 revenue in USD and the root cause of each discrepancy invoice found.

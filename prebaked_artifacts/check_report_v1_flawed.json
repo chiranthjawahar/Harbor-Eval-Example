@@ -1,0 +1,71 @@
+{
+  "results": [
+    {
+      "task_name": "q3-revenue-reconciliation",
+      "cost_usd": 0.0182,
+      "checks": {
+        "behavior_in_task_description": {
+          "outcome": "fail",
+          "explanation": "tests/test_outputs.py asserts data['net_recognized_usd_cents'] == 4400000 (in cents) and reverse-sorted data['discrepancy_invoice_ids'] == ['INV-1004', 'INV-1003', 'INV-1002'], but instruction.md only asks for 'a JSON file summarizing the Q3 recognized revenue in USD and listing any invoices that have a discrepancy' without specifying key names, cent units, or sort order."
+        },
+        "unbiased_prose_grading": {
+          "outcome": "fail",
+          "explanation": "tests/test_outputs.py requires the exact markdown substring '## Section 1: GAAP Variance Table' in /workspace/answer.md, which is not mentioned in instruction.md and couples grading to an incumbent prompt template."
+        },
+        "hermetic_verifier_execution": {
+          "outcome": "pass",
+          "explanation": "tests/test.sh only invokes standard library python3 and does not make network calls."
+        },
+        "workdir_and_path_alignment": {
+          "outcome": "pass",
+          "explanation": "Dockerfile WORKDIR, instruction.md, solve.sh, and test_outputs.py all use /workspace/reconciliation_report.json and /workspace/answer.md."
+        }
+      }
+    },
+    {
+      "task_name": "vendor-msa-compliance-audit",
+      "cost_usd": 0.0154,
+      "checks": {
+        "behavior_in_task_description": {
+          "outcome": "pass",
+          "explanation": "The JSON schema (overall_status, violated_clauses, required_remediations) is explicitly documented in instruction.md."
+        },
+        "unbiased_prose_grading": {
+          "outcome": "pass",
+          "explanation": "No undocumented stylistic prose checks are enforced."
+        },
+        "hermetic_verifier_execution": {
+          "outcome": "fail",
+          "explanation": "task.toml sets allow_internet = false, but tests/test.sh runs 'pip install pyyaml' at verification time, which fails in air-gapped sandboxes."
+        },
+        "workdir_and_path_alignment": {
+          "outcome": "fail",
+          "explanation": "instruction.md and solution/solve.sh write to /workspace/compliance_findings.json, whereas tests/test.sh checks /app/compliance_findings.json. Even OracleAgent scores 0.0."
+        }
+      }
+    },
+    {
+      "task_name": "customer-escalation-rca",
+      "cost_usd": 0.0169,
+      "checks": {
+        "behavior_in_task_description": {
+          "outcome": "pass",
+          "explanation": "Deliverable filenames and JSON schema are explicitly specified in instruction.md."
+        },
+        "unbiased_prose_grading": {
+          "outcome": "pass",
+          "explanation": "Verifier checks non-empty executive brief and structured JSON values without template bias."
+        },
+        "hermetic_verifier_execution": {
+          "outcome": "pass",
+          "explanation": "Verifier uses built-in python3 json/pathlib modules with no external network dependencies."
+        },
+        "workdir_and_path_alignment": {
+          "outcome": "pass",
+          "explanation": "All files consistently reference /workspace/sla_breach_rca.json and /workspace/answer.md."
+        }
+      }
+    }
+  ],
+  "total_cost_usd": 0.0505
+}

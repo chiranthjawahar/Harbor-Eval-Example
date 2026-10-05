@@ -1,0 +1,18 @@
+# Customer Baseline Evaluation Run
+# Run with: harbor run -c configs/exp1_customer_baseline.yaml
+job_name: "exp1_customer_baseline"
+jobs_dir: "jobs"
+n_concurrent_trials: 3
+n_attempts: 3
+
+environment:
+  type: "docker"
+
+agents:
+  - import_path: "harnesses.acme_agent:AcmeAgent"
+    model_name: "gemini-3.1-pro-preview"
+
+tasks:
+  - path: "datasets/acme_kw_bench/q3-revenue-reconciliation"
+  - path: "datasets/acme_kw_bench/vendor-msa-compliance-audit"
+  - path: "datasets/acme_kw_bench/customer-escalation-rca"

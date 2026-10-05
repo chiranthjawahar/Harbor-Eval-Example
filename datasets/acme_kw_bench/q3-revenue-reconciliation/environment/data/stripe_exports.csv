@@ -1,0 +1,6 @@
+invoice_id,customer,currency,amount,billing_term,status,charge_date
+INV-1001,Globex Corp,USD,12000.00,monthly,succeeded,2026-07-15
+INV-1002,Initech LLC,USD,24000.00,annual,succeeded,2026-07-01
+INV-1003,Soylent Corp,EUR,10000.00,monthly,succeeded,2026-08-10
+INV-1004,Umbrella Inc,USD,8500.00,monthly,refunded,2026-08-22
+INV-1005,Stark Industries,USD,15000.00,monthly,succeeded,2026-09-05

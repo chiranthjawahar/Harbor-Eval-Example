@@ -1,0 +1,22 @@
+# Custom `harbor check` Rubric for Detecting Eval & Verifier Bias
+# Usage: harbor check datasets/acme_kw_v1_flawed -r rubrics/bias_and_spec_check.toml
+
+[[criteria]]
+name = "behavior_in_task_description"
+description = "Whether all behavior, JSON keys, units, and sort orders checked in tests/test.sh are explicitly documented in instruction.md"
+guidance = "Compare instruction.md against tests/. PASS only if every required filename, JSON key name, numeric unit (dollars vs cents), and ordering constraint in tests is explicitly stated in instruction.md. FAIL if tests enforce undocumented keys or ordering."
+
+[[criteria]]
+name = "unbiased_prose_grading"
+description = "Whether the verifier grades functional accuracy rather than model-specific markdown templates or stylistic formatting"
+guidance = "PASS if tests verify factual values and required sections documented in instruction.md. FAIL if tests grep for exact markdown headers or phrasing not specified in instruction.md (incumbent template coupling)."
+
+[[criteria]]
+name = "hermetic_verifier_execution"
+description = "Whether tests/test.sh can execute offline without downloading packages at verification time when allow_internet = false"
+guidance = "Check task.toml allow_internet and tests/test.sh. FAIL if allow_internet = false and test.sh invokes pip install, apt-get, or curl against external endpoints."
+
+[[criteria]]
+name = "workdir_and_path_alignment"
+description = "Whether Dockerfile WORKDIR, instruction.md deliverable paths, solution/solve.sh, and tests/test.sh all reference the exact same filesystem paths"
+guidance = "Verify that the path written by solve.sh and requested in instruction.md matches the path read by tests/test.sh. FAIL if there is a path mismatch (e.g. /workspace vs /app)."

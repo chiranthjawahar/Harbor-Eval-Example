@@ -1,0 +1,18 @@
+# Stage 1: Answer-Key (oracle) & Do-Nothing (nop) Sanity Bounds ($0 LLM Cost)
+# Run with: harbor run -c configs/exp0_sanity_bounds.yaml
+job_name: "exp0_sanity_bounds"
+jobs_dir: "jobs"
+n_concurrent_trials: 3
+n_attempts: 1
+
+environment:
+  type: "docker"
+
+agents:
+  - name: "nop"
+  - name: "oracle"
+
+tasks:
+  - path: "datasets/acme_kw_bench/q3-revenue-reconciliation"
+  - path: "datasets/acme_kw_bench/vendor-msa-compliance-audit"
+  - path: "datasets/acme_kw_bench/customer-escalation-rca"

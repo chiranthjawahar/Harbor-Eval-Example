@@ -1,0 +1,18 @@
+# Final Fair Evaluation Run (Vertex AI + google-genai SDK + Gemini 3.1 Pro)
+# Run with: harbor run -c configs/exp3_fair_eval_ablations.yaml
+job_name: "exp3_fair_eval"
+jobs_dir: "jobs"
+n_concurrent_trials: 3
+n_attempts: 3
+
+environment:
+  type: "docker"
+
+agents:
+  - import_path: "harnesses.acme_agent:AcmeAgent"
+    model_name: "gemini-3.1-pro-preview"
+
+tasks:
+  - path: "datasets/acme_kw_bench/q3-revenue-reconciliation"
+  - path: "datasets/acme_kw_bench/vendor-msa-compliance-audit"
+  - path: "datasets/acme_kw_bench/customer-escalation-rca"

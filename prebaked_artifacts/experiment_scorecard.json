@@ -1,0 +1,131 @@
+{
+  "benchmark": "acme-kw-bench (3 Enterprise Knowledge Work Tasks, k=3 Attempts / Task)",
+  "experiments": [
+    {
+      "id": "Step 1",
+      "name": "Sanity Floor (nop)",
+      "dataset": "Flawed Benchmark",
+      "harness": "Do-Nothing Baseline (nop)",
+      "model": "none",
+      "thinking_level": "N/A",
+      "task_scores": {
+        "q3-revenue-reconciliation": 0.0,
+        "vendor-msa-compliance-audit": 0.0,
+        "customer-escalation-rca": 0.0
+      },
+      "pass_at_1_pct": 0.0,
+      "pass_pow_3_pct": 0.0,
+      "avg_steps": 0.0,
+      "avg_cost_per_resolved_usd": 0.0,
+      "finding": "PASS: Floor is 0.0% (no trivial passes or leaked answers in container image)."
+    },
+    {
+      "id": "Step 2",
+      "name": "Sanity Ceiling (oracle)",
+      "dataset": "Flawed Benchmark",
+      "harness": "Answer-Key Check (oracle)",
+      "model": "none",
+      "thinking_level": "N/A",
+      "task_scores": {
+        "q3-revenue-reconciliation": 1.0,
+        "vendor-msa-compliance-audit": 0.0,
+        "customer-escalation-rca": 1.0
+      },
+      "pass_at_1_pct": 66.7,
+      "pass_pow_3_pct": 66.7,
+      "avg_steps": 1.0,
+      "avg_cost_per_resolved_usd": 0.0,
+      "finding": "FAIL: Ceiling is only 66.7%! Task 2 (vendor-msa-compliance-audit) is impossible to pass due to /app vs /workspace path bug and offline pip install in test.sh."
+    },
+    {
+      "id": "Step 3",
+      "name": "Customer Baseline (Old Model)",
+      "dataset": "Flawed Benchmark",
+      "harness": "Legacy Harness (Co-adapted)",
+      "model": "incumbent-frontier-model",
+      "thinking_level": "HIGH",
+      "task_scores": {
+        "q3-revenue-reconciliation": 1.0,
+        "vendor-msa-compliance-audit": 0.0,
+        "customer-escalation-rca": 1.0
+      },
+      "pass_at_1_pct": 66.7,
+      "pass_pow_3_pct": 66.7,
+      "avg_steps": 6.2,
+      "avg_cost_per_resolved_usd": 0.42,
+      "finding": "Customer's legacy prompt had hardcoded hints for Task 1's undocumented cents/heading schema and Task 3's SQL column name."
+    },
+    {
+      "id": "Step 4",
+      "name": "Customer Baseline (Gemini)",
+      "dataset": "Flawed Benchmark",
+      "harness": "Legacy Harness (Low Effort)",
+      "model": "vertex_ai/gemini-3.1-pro-preview",
+      "thinking_level": "LOW (mismatched)",
+      "task_scores": {
+        "q3-revenue-reconciliation": 0.0,
+        "vendor-msa-compliance-audit": 0.0,
+        "customer-escalation-rca": 0.0
+      },
+      "pass_at_1_pct": 0.0,
+      "pass_pow_3_pct": 0.0,
+      "avg_steps": 6.7,
+      "avg_cost_per_resolved_usd": null,
+      "finding": "Headline looks like 0% vs 66.7%, but Gemini actually computed the exact right math on all 3 tasks—blocked by Task 1 verifier bias, Task 2 broken test.sh, and Task 3 swallowed stderr + 8-turn cap!"
+    },
+    {
+      "id": "Step 5",
+      "name": "Fixed Grader Only",
+      "dataset": "Cleaned Benchmark",
+      "harness": "Legacy Harness (Low Effort)",
+      "model": "vertex_ai/gemini-3.1-pro-preview",
+      "thinking_level": "LOW (mismatched)",
+      "task_scores": {
+        "q3-revenue-reconciliation": 1.0,
+        "vendor-msa-compliance-audit": 1.0,
+        "customer-escalation-rca": 0.33
+      },
+      "pass_at_1_pct": 77.8,
+      "pass_pow_3_pct": 66.7,
+      "avg_steps": 6.1,
+      "avg_cost_per_resolved_usd": 0.14,
+      "finding": "Fixing ONLY the biased verifier (Task 1) and broken test.sh (Task 2) lifts Gemini Pass@1 from 0.0% -> 77.8% without touching the agent or model."
+    },
+    {
+      "id": "Step 6",
+      "name": "Reference Harness Control",
+      "dataset": "Cleaned Benchmark",
+      "harness": "Reference Harness (High Effort)",
+      "model": "vertex_ai/gemini-3.1-pro-preview",
+      "thinking_level": "HIGH",
+      "task_scores": {
+        "q3-revenue-reconciliation": 1.0,
+        "vendor-msa-compliance-audit": 1.0,
+        "customer-escalation-rca": 1.0
+      },
+      "pass_at_1_pct": 100.0,
+      "pass_pow_3_pct": 100.0,
+      "avg_steps": 4.3,
+      "avg_cost_per_resolved_usd": 0.09,
+      "finding": "2x2 Control proves Gemini 3.1 Pro solves 100% (3/3 across all 3 seeds) when run in a clean reference harness."
+    },
+    {
+      "id": "Step 7",
+      "name": "Fixed Customer Harness",
+      "dataset": "Cleaned Benchmark",
+      "harness": "Fixed Harness (High Effort)",
+      "model": "vertex_ai/gemini-3.1-pro-preview",
+      "thinking_level": "HIGH",
+      "task_scores": {
+        "q3-revenue-reconciliation": 1.0,
+        "vendor-msa-compliance-audit": 1.0,
+        "customer-escalation-rca": 1.0
+      },
+      "pass_at_1_pct": 100.0,
+      "pass_pow_3_pct": 100.0,
+      "avg_steps": 4.0,
+      "avg_cost_per_resolved_usd": 0.08,
+      "finding": "Fixing stderr visibility, preserving thought_signature via google-genai SDK, and matching HIGH thinking effort achieves 100% Pass@1 & Pass^3 at 5x lower cost/resolved than the incumbent."
+    }
+  ]
+}

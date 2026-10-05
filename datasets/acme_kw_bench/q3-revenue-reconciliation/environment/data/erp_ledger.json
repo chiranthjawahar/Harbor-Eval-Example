@@ -1,0 +1,10 @@
+{
+  "quarter": "2026-Q3",
+  "entries": [
+    {"invoice_id": "INV-1001", "customer": "Globex Corp", "recognized_usd": 12000.00},
+    {"invoice_id": "INV-1002", "customer": "Initech LLC", "recognized_usd": 24000.00},
+    {"invoice_id": "INV-1003", "customer": "Soylent Corp", "recognized_usd": 10000.00},
+    {"invoice_id": "INV-1004", "customer": "Umbrella Inc", "recognized_usd": 8500.00},
+    {"invoice_id": "INV-1005", "customer": "Stark Industries", "recognized_usd": 15000.00}
+  ]
+}
